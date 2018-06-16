@@ -4,6 +4,7 @@ import com.fiap.roupapp.roupapp.entity.Cliente;
 import com.fiap.roupapp.roupapp.entity.Item;
 import com.fiap.roupapp.roupapp.entity.Pedido;
 import com.fiap.roupapp.roupapp.entity.Produto;
+import com.fiap.roupapp.roupapp.jms.JmsProducer;
 import com.fiap.roupapp.roupapp.repository.ClienteRepository;
 import com.fiap.roupapp.roupapp.repository.ItemRepository;
 import com.fiap.roupapp.roupapp.repository.PedidoRepository;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/cliente")
@@ -32,14 +32,18 @@ public class ClienteController {
     private ItemRepository itemRepository;
     private PedidoRepository pedidoRepository;
     private ProdutoRepository produtoRepository;
+    private JmsProducer jmsProducer;
 
-    @Autowired
-    public ClienteController(ClienteRepository clienteRepository, ItemRepository itemRepository, PedidoRepository pedidoRepository, ProdutoRepository produtoRepository) {
+    public ClienteController(ClienteRepository clienteRepository, ItemRepository itemRepository, PedidoRepository pedidoRepository, ProdutoRepository produtoRepository, JmsProducer jmsProducer) {
         this.clienteRepository = clienteRepository;
         this.itemRepository = itemRepository;
         this.pedidoRepository = pedidoRepository;
         this.produtoRepository = produtoRepository;
+        this.jmsProducer = jmsProducer;
     }
+
+    @Autowired
+
 
     @PostMapping
     public ResponseEntity carregarBase(){
@@ -99,5 +103,14 @@ public class ClienteController {
 
         return ResponseEntity.ok().body("");
 
+    }
+
+    @RequestMapping("/jms/{message}")
+    public ResponseEntity testeMq(@PathVariable("message")String message){
+
+           jmsProducer.processMessaging(message);
+
+
+        return ResponseEntity.ok().body("");
     }
 }
