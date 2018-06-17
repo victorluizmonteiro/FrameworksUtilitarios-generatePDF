@@ -4,9 +4,12 @@ import com.fiap.roupapp.roupapp.database.CarregarDatabase;
 import com.fiap.roupapp.roupapp.entity.Cliente;
 import com.fiap.roupapp.roupapp.jms.JmsProducer;
 import com.fiap.roupapp.roupapp.repository.ClienteRepository;
+import com.fiap.roupapp.roupapp.utils.ItextUtils;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,57 +26,66 @@ import java.io.FileOutputStream;
 public class ClienteController {
 
     private ClienteRepository clienteRepository;
-   private CarregarDatabase carregarDatabase;
+    private CarregarDatabase carregarDatabase;
     private JmsProducer jmsProducer;
+    private ItextUtils itextUtils;
 
-    @Autowired
-    public ClienteController(ClienteRepository clienteRepository, CarregarDatabase carregarDatabase, JmsProducer jmsProducer) {
+    public ClienteController(ClienteRepository clienteRepository, CarregarDatabase carregarDatabase, JmsProducer jmsProducer, ItextUtils itextUtils) {
         this.clienteRepository = clienteRepository;
         this.carregarDatabase = carregarDatabase;
         this.jmsProducer = jmsProducer;
+        this.itextUtils = itextUtils;
     }
 
 
-    @PostMapping
-    public ResponseEntity carregarBase(){
 
-            carregarDatabase.carregarBase();
+
+    @PostMapping
+    public ResponseEntity carregarBase() {
+
+        carregarDatabase.carregarBase();
 
         return ResponseEntity.ok().body("");
-
 
 
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity gerarPdf(@PathVariable Integer id){
+    public ResponseEntity gerarPdf(@PathVariable Integer id) {
 
-        Cliente cliente= clienteRepository.findById(id).get();
+        Cliente cliente = clienteRepository.findById(id).get();
 
         Document cupom = new Document();
 
-        try{
-            PdfWriter writer = PdfWriter.getInstance(cupom,new FileOutputStream("C:\\Users\\Zup\\Desktop\\cupom.pdf"));
+        try {
+            PdfWriter writer = PdfWriter.getInstance(cupom, new FileOutputStream("C:\\Users\\Zup\\Desktop\\cupom.pdf"));
 
             cupom.open();
             cupom.add(new Paragraph("Gerando PDF"));
             cupom.add(new Paragraph(cliente.getCpf()));
+            PdfContentByte pdfContentByte = writer.getDirectContent();
+             Image barCode128 = itextUtils.createBarCode(pdfContentByte);
+             Image qrCode = itextUtils.createQrCode();
+
+             cupom.add(barCode128);
+             cupom.add(qrCode);
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-    cupom.close();
+        cupom.close();
 
         return ResponseEntity.ok().body("");
 
     }
 
     @RequestMapping("/jms/{message}")
-    public ResponseEntity testeMq(@PathVariable("message")String message){
+    public ResponseEntity testeMq(@PathVariable("message") String message) {
 
-           jmsProducer.processMessaging(message);
+        jmsProducer.processMessaging(message);
 
 
         return ResponseEntity.ok().body("");
