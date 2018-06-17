@@ -1,14 +1,9 @@
 package com.fiap.roupapp.roupapp.controller;
 
+import com.fiap.roupapp.roupapp.database.CarregarDatabase;
 import com.fiap.roupapp.roupapp.entity.Cliente;
-import com.fiap.roupapp.roupapp.entity.Item;
-import com.fiap.roupapp.roupapp.entity.Pedido;
-import com.fiap.roupapp.roupapp.entity.Produto;
 import com.fiap.roupapp.roupapp.jms.JmsProducer;
 import com.fiap.roupapp.roupapp.repository.ClienteRepository;
-import com.fiap.roupapp.roupapp.repository.ItemRepository;
-import com.fiap.roupapp.roupapp.repository.PedidoRepository;
-import com.fiap.roupapp.roupapp.repository.ProdutoRepository;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
@@ -22,60 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
 
     private ClienteRepository clienteRepository;
-    private ItemRepository itemRepository;
-    private PedidoRepository pedidoRepository;
-    private ProdutoRepository produtoRepository;
+   private CarregarDatabase carregarDatabase;
     private JmsProducer jmsProducer;
 
-    public ClienteController(ClienteRepository clienteRepository, ItemRepository itemRepository, PedidoRepository pedidoRepository, ProdutoRepository produtoRepository, JmsProducer jmsProducer) {
+    @Autowired
+    public ClienteController(ClienteRepository clienteRepository, CarregarDatabase carregarDatabase, JmsProducer jmsProducer) {
         this.clienteRepository = clienteRepository;
-        this.itemRepository = itemRepository;
-        this.pedidoRepository = pedidoRepository;
-        this.produtoRepository = produtoRepository;
+        this.carregarDatabase = carregarDatabase;
         this.jmsProducer = jmsProducer;
     }
-
-    @Autowired
 
 
     @PostMapping
     public ResponseEntity carregarBase(){
 
-        Cliente cliente = new Cliente();
-        cliente.setCnpj("3443");
-        cliente.setCpf("344334");
-        cliente.setNome("Victor");
-
-
-        Produto produto = new Produto();
-        produto.setDescricao("dffffg");
-        produto.setPreco(BigDecimal.TEN);
-
-
-        Item item = new Item();
-        item.setQuantidade(10);
-        item.setValor(BigDecimal.TEN);
-
-        item.setProduto(produto);
-        produto.setItem(item);
-
-        Pedido pedido = new Pedido();
-        pedido.addItem(item);
-
-        cliente.addPedido(pedido);
-        itemRepository.save(item);
-
-        clienteRepository.save(cliente);
-
+            carregarDatabase.carregarBase();
 
         return ResponseEntity.ok().body("");
+
 
 
     }
