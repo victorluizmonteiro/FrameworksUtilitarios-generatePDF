@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Random;
 
 @Component
@@ -30,8 +32,8 @@ public class CarregarDatabase {
            Integer number = random.nextInt(1000);
 
             Cliente cliente = new Cliente();
-            cliente.setCnpj(number.toString());
-            cliente.setCpf(number.toString());
+            cliente.setCnpj("11.111.111/111-11");
+            cliente.setCpf("222.333.444-88");
             cliente.setNome("Victor");
 
 
@@ -49,6 +51,7 @@ public class CarregarDatabase {
 
             Pedido pedido = new Pedido();
             pedido.addItem(item);
+            pedido.setLocalDateTime(LocalDateTime.of(2018, Month.AUGUST,18,0,0));
 
             cliente.addPedido(pedido);
             itemRepository.save(item);

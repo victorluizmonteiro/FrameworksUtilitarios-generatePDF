@@ -1,6 +1,8 @@
 package com.fiap.roupapp.roupapp.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
@@ -16,9 +18,12 @@ public class Pedido {
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Cliente cliente;
 
-    public Pedido(List<Item> itens, Cliente cliente) {
+    private LocalDateTime localDateTime;
+
+    public Pedido(List<Item> itens, Cliente cliente, LocalDateTime localDateTime) {
         this.itens = new ArrayList<Item>();
         this.cliente = cliente;
+        this.localDateTime = localDateTime;
     }
 
     public Pedido() {
@@ -52,5 +57,13 @@ public class Pedido {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 }

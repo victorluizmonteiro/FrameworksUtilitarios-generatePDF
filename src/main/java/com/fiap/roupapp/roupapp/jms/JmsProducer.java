@@ -17,7 +17,7 @@ public class JmsProducer {
         this.queueName = queueName;
     }
 
-    public void processMessaging(String message) {
+    public void processMessaging(Integer message) {
 
         jmsTemplate.convertAndSend(queueName, message);
 
