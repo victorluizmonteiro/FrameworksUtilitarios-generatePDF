@@ -1,12 +1,14 @@
 package com.fiap.roupapp.roupapp.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
-public class Pedido {
+public class Pedido  {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

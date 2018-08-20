@@ -6,20 +6,20 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JmsProducer {
+public class JmsProducerPedidos {
 
     private JmsTemplate jmsTemplate;
     private String queueName;
 
     @Autowired
-    public JmsProducer(JmsTemplate jmsTemplate, @Value("${mq.queue}")String queueName) {
+    public JmsProducerPedidos(JmsTemplate jmsTemplate, @Value("${mq.queue.pedidos}")String queueName) {
         this.jmsTemplate = jmsTemplate;
         this.queueName = queueName;
     }
 
-    public void processMessaging(Integer message) {
+    public void processMessaging(Integer pedidoId) {
 
-        jmsTemplate.convertAndSend(queueName, message);
+        jmsTemplate.convertAndSend(queueName, pedidoId);
 
 
     }
