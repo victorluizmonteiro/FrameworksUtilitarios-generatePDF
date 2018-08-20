@@ -4,6 +4,7 @@ import com.fiap.roupapp.roupapp.entity.Cliente;
 import com.fiap.roupapp.roupapp.entity.Pedido;
 import com.fiap.roupapp.roupapp.repository.ClienteRepository;
 import com.fiap.roupapp.roupapp.repository.PedidoRepository;
+import com.fiap.roupapp.roupapp.service.ClienteService;
 import com.fiap.roupapp.roupapp.service.PedidoService;
 import com.fiap.roupapp.roupapp.utils.ItextUtils;
 import com.itextpdf.text.Document;
@@ -29,7 +30,7 @@ public class JmsConsumerPDF {
 
     private String queueName;
     private ItextUtils itextUtils;
-    private ClienteRepository clienteRepository;
+    private ClienteService clienteService;
     private PedidoService pedidoService;
 
 
@@ -37,12 +38,12 @@ public class JmsConsumerPDF {
     public JmsConsumerPDF(@Value("${mq.queue.pdf}") String queueName,
                           ItextUtils itextUtils,
                           PedidoService pedidoService,
-                          ClienteRepository clienteRepository
+                          ClienteService clienteService
                        ) {
         
         this.queueName = queueName;
         this.itextUtils = itextUtils;
-        this.clienteRepository = clienteRepository;
+        this.clienteService = clienteService;
         this.pedidoService = pedidoService;
 
     }
@@ -59,8 +60,8 @@ public class JmsConsumerPDF {
 
         System.out.println("RECEBENDO " + pedidoId + ".....");
 
-        Pedido pedido = pedidoService.buscarPedido(pedidoId);
-       Cliente cliente = clienteRepository.findById(pedido.getCliente().getId()).get();
+        Pedido pedido = pedidoService.findPedidoById(pedidoId);
+       Cliente cliente = clienteService.findById(pedido.getCliente().getId());
 
         Document cupom = new Document();
 

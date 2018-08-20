@@ -32,7 +32,7 @@ public class JmsConsumerPedidos {
         System.out.println("Recebendo pedidos...   " + pedidoId);
         if( pedidoId < 0){
 
-        List<Pedido> pedidos = pedidoService.buscarTodos();
+        List<Pedido> pedidos = pedidoService.findAll();
 
        pedidos.stream().forEach( p -> jmsProducerPDF.processMessaging(p.getId()));
 

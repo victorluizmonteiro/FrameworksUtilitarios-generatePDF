@@ -5,6 +5,7 @@ import com.fiap.roupapp.roupapp.entity.Pedido;
 import com.fiap.roupapp.roupapp.jms.JmsProducerPDF;
 import com.fiap.roupapp.roupapp.jms.JmsProducerPedidos;
 import com.fiap.roupapp.roupapp.repository.PedidoRepository;
+import com.fiap.roupapp.roupapp.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,17 +25,17 @@ public class ClienteController {
     private CarregarDatabase carregarDatabase;
     private JmsProducerPDF jmsProducerPDF;
     private JmsProducerPedidos jmsProducerPedidos;
-    private PedidoRepository pedidoRepository;
+    private PedidoService pedidoService;
 
     @Autowired
     public ClienteController(CarregarDatabase carregarDatabase,
                              JmsProducerPDF jmsProducerPDF,
                              JmsProducerPedidos jmsProducerPedidos,
-                             PedidoRepository pedidoRepository) {
+                             PedidoService pedidoService) {
         this.carregarDatabase = carregarDatabase;
         this.jmsProducerPDF = jmsProducerPDF;
         this.jmsProducerPedidos = jmsProducerPedidos;
-        this.pedidoRepository = pedidoRepository;
+        this.pedidoService = pedidoService;
     }
 
     @PostMapping
@@ -75,7 +76,7 @@ public class ClienteController {
     public ResponseEntity generatePdfByMonth(@PathVariable("mes") Integer mes) {
 
     try{
-    List<Pedido> pedidos = pedidoRepository.findAll();
+    List<Pedido> pedidos = pedidoService.findAll();
 
     List<Pedido> pedidosFilter = pedidos.stream().filter(p -> p.getLocalDateTime().getMonth().equals(Month.of(mes))).collect(Collectors.toList());
 

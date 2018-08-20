@@ -21,14 +21,14 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido buscarPedido(Integer id){
+    public Pedido findPedidoById(Integer id){
 
         return pedidoRepository.findById(id).get();
     }
 
     @Transactional
     @Cacheable("Pedidos")
-    public List<Pedido>buscarTodos(){
+    public List<Pedido>findAll(){
 
         return pedidoRepository.findAll();
     }
