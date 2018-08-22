@@ -54,7 +54,7 @@ public class JmsConsumerPDF {
     }*/
 
 
-    @JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory")
+   // @JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory")
     public void receiveMessage(Integer pedidoId) throws ExecutionException, InterruptedException {
 
 

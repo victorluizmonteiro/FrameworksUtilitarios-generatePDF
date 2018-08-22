@@ -11,9 +11,9 @@ import java.util.Optional;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente,Integer> {
 
-    @Query(value = "select * from cliente where id = ?1",nativeQuery = true)
+
     Optional<Cliente> findById(Integer id);
 
-    @Query(value = "select * from cliente",nativeQuery = true)
+
     List<Cliente> findAll();
 }
