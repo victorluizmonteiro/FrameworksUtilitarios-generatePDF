@@ -13,6 +13,8 @@ public interface PedidoRepository extends JpaRepository<Pedido,Integer> {
 
     Optional<Pedido> findById(Integer id);
 
+    @Query(value = "SELECT ID FROM PEDIDO",nativeQuery = true)
+    List<Integer>findId();
 
     List<Pedido> findAll();
 }

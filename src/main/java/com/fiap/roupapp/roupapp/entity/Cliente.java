@@ -1,11 +1,13 @@
 package com.fiap.roupapp.roupapp.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
-public class Cliente {
+public class Cliente implements Serializable {
 
+    private static final long serialVersionUID = -4478427800340465546L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

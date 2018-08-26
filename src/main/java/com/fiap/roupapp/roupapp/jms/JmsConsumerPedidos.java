@@ -26,15 +26,16 @@ public class JmsConsumerPedidos {
         this.jmsProducerPDF = jmsProducerPDF;
     }
 
-    @JmsListener(destination = "${mq.queue.pedidos}", containerFactory = "jsaFactory")
-    public void receiveMessage(Integer pedidoId) {
+    @JmsListener(destination = "${mq.queue.pedidos}", containerFactory = "jsaFactory",concurrency ="10-50")
+    public void receiveMessageOne(Integer pedidoId) {
 
         System.out.println("Recebendo pedidos...   " + pedidoId);
         if( pedidoId < 0){
 
-        List<Pedido> pedidos = pedidoService.findAll();
+        List<Integer> ids = pedidoService.findId();
+        ids.forEach( id -> jmsProducerPDF.processMessaging(id));
 
-       pedidos.stream().forEach( p -> jmsProducerPDF.processMessaging(p.getId()));
+
 
     }else {
         jmsProducerPDF.processMessaging(pedidoId);
@@ -43,5 +44,7 @@ public class JmsConsumerPedidos {
 
 
     }
+
+
 
 }

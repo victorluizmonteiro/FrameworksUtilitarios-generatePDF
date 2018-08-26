@@ -39,6 +39,9 @@ public class JmsConfiguration {
         connectionFactory.setBrokerURL(brokerUrl);
         connectionFactory.setUserName(user);
         connectionFactory.setPassword(password);
+        connectionFactory.setDisableTimeStampsByDefault(true);
+
+
         return connectionFactory;
     }
 
