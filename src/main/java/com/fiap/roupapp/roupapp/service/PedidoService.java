@@ -24,7 +24,7 @@ public class PedidoService {
     }
 
 
-
+    @Cacheable(value = "pedidos",key = "#id",unless="result.id < 500")
     @Transactional(readOnly = true)
     public Pedido findPedidoById(Integer id){
 
@@ -32,14 +32,12 @@ public class PedidoService {
     }
 
     @Transactional(readOnly=true,propagation = Propagation.SUPPORTS)
-
     //@Async("fileExecutor")
     public List<Pedido>findAll(){
 
         return pedidoRepository.findAll();
     }
-    @Cacheable(value = "pedidoCache")
-    @Async("fileExecutor")
+
     public List<Integer>findId(){
 
         return pedidoRepository.findId();

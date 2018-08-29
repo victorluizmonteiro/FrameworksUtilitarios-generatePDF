@@ -7,11 +7,9 @@ import com.fiap.roupapp.roupapp.jms.JmsProducerPedidos;
 import com.fiap.roupapp.roupapp.repository.PedidoRepository;
 import com.fiap.roupapp.roupapp.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Month;
 import java.util.List;
@@ -89,11 +87,12 @@ public class ClienteController {
     }
 
 
-
-
-
-
-
-
     }
+
+    @CacheEvict(value = "*", allEntries = true, key = "'*'")
+    @GetMapping("/clear")
+    public void clearCache() {
+        //log.info("clear cache");
+    }
+
 }

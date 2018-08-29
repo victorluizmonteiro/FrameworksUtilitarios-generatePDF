@@ -18,24 +18,23 @@ public class ClienteService {
 
     private ClienteRepository clienteRepository;
 
-    private JdbcTemplate jdbcTemplate;
 
 
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository, JdbcTemplate jdbcTemplate) {
+    public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
-        this.jdbcTemplate = jdbcTemplate;
+
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "clientes",key = "#id",unless="result.id < 500")
     public Cliente findById(Integer id){
 
         return clienteRepository.findById(id).get();
     }
 
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true)
     @Async("fileExecutor")
-    @Cacheable(value = "clienteCache")
     public List<Cliente> findAll(){
 
 

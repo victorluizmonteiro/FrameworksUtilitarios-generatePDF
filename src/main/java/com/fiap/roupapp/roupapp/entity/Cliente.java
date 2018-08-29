@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
+@Table(name = "CLIENTE")
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = -4478427800340465546L;
