@@ -26,7 +26,7 @@ public class PedidoService {
 
     @Cacheable(value = "pedidos",key = "#id",unless="result.id < 500")
     @Transactional(readOnly = true)
-    public Pedido findPedidoById(Integer id){
+    public Pedido findPedidoById(String id){
 
         return  pedidoRepository.findById(id).get();
     }
@@ -38,7 +38,7 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
-    public List<Integer>findId(){
+    public List<String>findId(){
 
         return pedidoRepository.findId();
     }

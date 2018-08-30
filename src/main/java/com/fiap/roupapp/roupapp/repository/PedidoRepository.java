@@ -8,15 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface PedidoRepository extends JpaRepository<Pedido,Integer> {
+public interface PedidoRepository extends JpaRepository<Pedido,String> {
 
 
-    @Query(value = "SELECT * FROM pedido WHERE ID = ?1",nativeQuery = true)
-    Optional<Pedido> findById(Integer id);
+    Optional<Pedido> findById(String id);
 
-    @Query(value = "SELECT ID FROM pedido",nativeQuery = true)
-    List<Integer>findId();
+    List<String>findId();
 
-    @Query(value = "SELECT * FROM pedido",nativeQuery = true)
     List<Pedido> findAll();
 }

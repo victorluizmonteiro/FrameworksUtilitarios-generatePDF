@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Calendar;
@@ -54,8 +53,8 @@ public class JmsConsumerPDF {
     }*/
 
 
-   // @JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory")
-    public void receiveMessage(Integer pedidoId) throws ExecutionException, InterruptedException {
+   @JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory")
+    public void receiveMessage(String pedidoId) throws ExecutionException, InterruptedException {
 
 
         System.out.println("RECEBENDO " + pedidoId + ".....");

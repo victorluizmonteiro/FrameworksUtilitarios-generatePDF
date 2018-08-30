@@ -1,17 +1,19 @@
 package com.fiap.roupapp.roupapp.entity;
 
-import javax.persistence.*;
+import jdk.nashorn.internal.ir.annotations.Reference;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+
 import java.math.BigDecimal;
 
-@Entity
-@Table(name="PRODUTO")
+
+@RedisHash("produtos")
 public class Produto {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
     private String descricao;
     private BigDecimal preco;
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @Reference
     private Item item;
 
 
@@ -27,11 +29,11 @@ public class Produto {
 
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

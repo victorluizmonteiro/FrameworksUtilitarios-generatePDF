@@ -4,11 +4,9 @@ import com.fiap.roupapp.roupapp.entity.Cliente;
 import com.fiap.roupapp.roupapp.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -28,7 +26,7 @@ public class ClienteService {
 
     @Transactional(readOnly = true)
     @Cacheable(value = "clientes",key = "#id",unless="result.id < 500")
-    public Cliente findById(Integer id){
+    public Cliente findById(String id){
 
         return clienteRepository.findById(id).get();
     }

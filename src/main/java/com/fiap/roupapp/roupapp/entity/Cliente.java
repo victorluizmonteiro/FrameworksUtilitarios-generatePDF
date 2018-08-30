@@ -1,22 +1,31 @@
 package com.fiap.roupapp.roupapp.entity;
 
-import javax.persistence.*;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Reference;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-@Entity
-@Table(name = "CLIENTE")
+
+
+
+@RedisHash("clients")
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = -4478427800340465546L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Indexed
+    private String id;
     private String cnpj;
     private String nome;
     private String cpf;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "cliente")
+
+    @Reference
     private List<Pedido> pedidos;
 
 
@@ -37,11 +46,12 @@ public class Cliente implements Serializable {
         this.pedidos = new ArrayList<Pedido>();
     }
 
-    public Integer getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

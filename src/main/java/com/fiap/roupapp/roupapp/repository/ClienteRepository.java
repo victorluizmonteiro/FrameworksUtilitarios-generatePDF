@@ -9,11 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface ClienteRepository extends JpaRepository<Cliente,Integer> {
+public interface ClienteRepository extends JpaRepository<Cliente,String> {
 
-    @Query(value = "SELECT * FROM cliente WHERE ID = ?1",nativeQuery = true)
-    Optional<Cliente> findById(Integer id);
+    Optional<Cliente> findById(String id);
 
-    @Query(value = "SELECT * FROM cliente",nativeQuery = true)
     List<Cliente> findAll();
 }

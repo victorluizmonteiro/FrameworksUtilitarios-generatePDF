@@ -1,11 +1,13 @@
 package com.fiap.roupapp.roupapp.controller;
 
 import com.fiap.roupapp.roupapp.database.CarregarDatabase;
+import com.fiap.roupapp.roupapp.entity.Cliente;
 import com.fiap.roupapp.roupapp.entity.Pedido;
 import com.fiap.roupapp.roupapp.jms.JmsProducerPDF;
 import com.fiap.roupapp.roupapp.jms.JmsProducerPedidos;
-import com.fiap.roupapp.roupapp.repository.PedidoRepository;
+import com.fiap.roupapp.roupapp.service.ClienteService;
 import com.fiap.roupapp.roupapp.service.PedidoService;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +26,19 @@ public class ClienteController {
     private JmsProducerPDF jmsProducerPDF;
     private JmsProducerPedidos jmsProducerPedidos;
     private PedidoService pedidoService;
+    private ClienteService clienteService;
 
     @Autowired
     public ClienteController(CarregarDatabase carregarDatabase,
                              JmsProducerPDF jmsProducerPDF,
                              JmsProducerPedidos jmsProducerPedidos,
-                             PedidoService pedidoService) {
+                             PedidoService pedidoService,
+                             ClienteService clienteService) {
         this.carregarDatabase = carregarDatabase;
         this.jmsProducerPDF = jmsProducerPDF;
         this.jmsProducerPedidos = jmsProducerPedidos;
         this.pedidoService = pedidoService;
+        this.clienteService = clienteService;
     }
 
     @PostMapping
@@ -56,7 +61,7 @@ public class ClienteController {
 
 
     @PostMapping("/gerarPedido/{idPedido}")
-    public ResponseEntity testeMq(@PathVariable("idPedido") Integer pedidoId) {
+    public ResponseEntity testeMq(@PathVariable("idPedido") String pedidoId) {
 
        try{
            jmsProducerPedidos.processMessaging(pedidoId);
@@ -93,6 +98,12 @@ public class ClienteController {
     @GetMapping("/clear")
     public void clearCache() {
         //log.info("clear cache");
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Pedido>>buscaClientes(){
+
+        return ResponseEntity.ok().body(pedidoService.findAll());
     }
 
 }
