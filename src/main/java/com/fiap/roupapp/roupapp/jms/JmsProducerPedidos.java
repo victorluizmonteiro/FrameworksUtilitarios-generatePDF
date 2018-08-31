@@ -17,7 +17,7 @@ public class JmsProducerPedidos {
         this.queueName = queueName;
     }
 
-    public void processMessaging(String pedidoId) {
+    public void processMessaging(int pedidoId) {
 
         jmsTemplate.convertAndSend(queueName, pedidoId);
 

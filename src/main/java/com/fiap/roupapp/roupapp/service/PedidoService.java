@@ -24,11 +24,10 @@ public class PedidoService {
     }
 
 
-    @Cacheable(value = "pedidos",key = "#id",unless="result.id < 500")
     @Transactional(readOnly = true)
-    public Pedido findPedidoById(String id){
+    public Pedido findByIdentificationPedido(int identification){
 
-        return  pedidoRepository.findById(id).get();
+        return  pedidoRepository.findByIdentificationPedido(identification).get();
     }
 
     @Transactional(readOnly=true,propagation = Propagation.SUPPORTS)

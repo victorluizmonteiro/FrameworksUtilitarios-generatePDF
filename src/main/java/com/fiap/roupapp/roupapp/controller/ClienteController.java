@@ -61,7 +61,7 @@ public class ClienteController {
 
 
     @PostMapping("/gerarPedido/{idPedido}")
-    public ResponseEntity testeMq(@PathVariable("idPedido") String pedidoId) {
+    public ResponseEntity testeMq(@PathVariable("idPedido") Integer pedidoId) {
 
        try{
            jmsProducerPedidos.processMessaging(pedidoId);
@@ -84,7 +84,7 @@ public class ClienteController {
     List<Pedido> pedidosFilter = pedidos.stream().filter(p -> p.getLocalDateTime().getMonth().equals(Month.of(mes))).collect(Collectors.toList());
 
 
-        pedidosFilter.stream().forEach( p -> jmsProducerPDF.processMessaging(p.getId()));
+        pedidosFilter.stream().forEach( p -> jmsProducerPDF.processMessaging(p.getIdentificationPedido()));
 
         return ResponseEntity.ok().body("Pedidos postados na fila com sucesso !");
     }catch (Exception e){
@@ -101,9 +101,9 @@ public class ClienteController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Pedido>>buscaClientes(){
+    public ResponseEntity<List<Cliente>>buscaClientes(){
 
-        return ResponseEntity.ok().body(pedidoService.findAll());
+        return ResponseEntity.ok().body(clienteService.findAll());
     }
 
 }

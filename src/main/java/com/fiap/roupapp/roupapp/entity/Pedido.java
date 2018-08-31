@@ -16,20 +16,23 @@ public class Pedido implements  Serializable{
 
     private static final long serialVersionUID = -2135572526423631361L;
     @Id
-    @Indexed
     private String id;
+
+    private int identificationPedido;
 
     @Reference
     private List<Item> itens;
 
-    @Reference
-    private Cliente cliente;
+   @Reference
+    private int clientIdentification;
 
     private LocalDateTime localDateTime;
 
-    public Pedido(List<Item> itens, Cliente cliente, LocalDateTime localDateTime) {
-        this.itens = new ArrayList<Item>();
-        this.cliente = cliente;
+    public Pedido(String id, int identificationPedido, List<Item> itens, int clientIdentification, LocalDateTime localDateTime) {
+        this.id = id;
+        this.identificationPedido = identificationPedido;
+        this.itens = itens;
+        this.clientIdentification = clientIdentification;
         this.localDateTime = localDateTime;
     }
 
@@ -37,10 +40,10 @@ public class Pedido implements  Serializable{
         itens = new ArrayList<Item>();
     }
 
-    public void addItem(Item item){
+   /* public void addItem(Item item){
         item.setPedido(this);
         itens.add(item);
-    }
+    }*/
 
     public String getId() {
         return id;
@@ -58,12 +61,12 @@ public class Pedido implements  Serializable{
         this.itens = itens;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public int getClientIdentification() {
+        return clientIdentification;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setClientIdentification(int clientIdentification) {
+        this.clientIdentification = clientIdentification;
     }
 
     public LocalDateTime getLocalDateTime() {
@@ -72,5 +75,13 @@ public class Pedido implements  Serializable{
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    public int getIdentificationPedido() {
+        return identificationPedido;
+    }
+
+    public void setIdentificationPedido(int identificationPedido) {
+        this.identificationPedido = identificationPedido;
     }
 }

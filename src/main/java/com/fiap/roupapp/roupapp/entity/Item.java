@@ -14,24 +14,23 @@ public class Item {
     private Integer quantidade;
     private BigDecimal valor;
 
-    @Reference
-    private Pedido pedido;
+    //@Reference
+    //private Pedido pedido;
 
-    @Reference
-    private Produto produto;
+    //@Reference
+    //private Produto produto;
 
 
     public Item() {
     }
 
-    public Item(String id, Integer quantidade, BigDecimal valor, Pedido pedido, Produto produto) {
+
+
+    public Item(String id, Integer quantidade, BigDecimal valor) {
         this.id = id;
         this.quantidade = quantidade;
         this.valor = valor;
-        this.pedido = pedido;
-        this.produto = produto;
     }
-
 
     public String getId() {
         return id;
@@ -57,19 +56,19 @@ public class Item {
         this.valor = valor;
     }
 
-    public Pedido getPedido() {
+    /*public Pedido getPedido() {
         return pedido;
     }
 
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
-    }
+    }*/
 
-    public Produto getProduto() {
+    /*public Produto getProduto() {
         return produto;
     }
 
     public void setProduto(Produto produto) {
         this.produto = produto;
-    }
+    }*/
 }

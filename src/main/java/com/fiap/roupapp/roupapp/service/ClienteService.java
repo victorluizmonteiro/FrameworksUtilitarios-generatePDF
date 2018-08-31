@@ -25,10 +25,9 @@ public class ClienteService {
     }
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "clientes",key = "#id",unless="result.id < 500")
-    public Cliente findById(String id){
+    public Cliente findByIdentificationClient(int id){
 
-        return clienteRepository.findById(id).get();
+        return clienteRepository.findByIdentificationClient(id).get();
     }
 
     @Transactional(readOnly = true)

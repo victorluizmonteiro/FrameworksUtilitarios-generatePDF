@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface ClienteRepository extends JpaRepository<Cliente,String> {
 
-    Optional<Cliente> findById(String id);
+    Optional<Cliente> findByIdentificationClient(int identificationClient);
 
     List<Cliente> findAll();
 }

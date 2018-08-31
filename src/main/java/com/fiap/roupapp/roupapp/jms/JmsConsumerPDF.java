@@ -54,13 +54,13 @@ public class JmsConsumerPDF {
 
 
    @JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory")
-    public void receiveMessage(String pedidoId) throws ExecutionException, InterruptedException {
+    public void receiveMessage(int pedidoId) throws ExecutionException, InterruptedException {
 
 
         System.out.println("RECEBENDO " + pedidoId + ".....");
 
-        Pedido pedido = pedidoService.findPedidoById(pedidoId);
-       Cliente cliente = clienteService.findById(pedido.getCliente().getId());
+        Pedido pedido = pedidoService.findByIdentificationPedido(pedidoId);
+       Cliente cliente = clienteService.findByIdentificationClient(pedido.getClientIdentification());
 
         Document cupom = new Document();
 
@@ -69,7 +69,7 @@ public class JmsConsumerPDF {
 
 
                 //PdfWriter writer = PdfWriter.getInstance(cupom, new FileOutputStream("D:\\PDFS\\cupom "+pedido.getId()+"-"+ Calendar.getInstance().getTimeInMillis() + ".pdf"));
-                PdfWriter writer = PdfWriter.getInstance(cupom, new FileOutputStream("/Users/monteiro/Documents/PDF/cupom"+pedido.getId()+"-"+ Calendar.getInstance().getTimeInMillis() + ".pdf"));
+                PdfWriter writer = PdfWriter.getInstance(cupom, new FileOutputStream("/Users/monteiro/Documents/PDF/cupom"+pedido.getIdentificationPedido()+"-"+ Calendar.getInstance().getTimeInMillis() + ".pdf"));
 
                 cupom.open();
                 cupom.add(new Paragraph("Gerando PDF"));

@@ -41,12 +41,13 @@ public class CarregarDatabase {
     public void carregarBase() {
         Random random = new Random();
         for (int i = 0; i < 100; i++) {
-            Integer number = random.nextInt(1000);
+            int number = random.nextInt(1000);
 
             Cliente cliente = new Cliente();
             cliente.setCnpj("11.111.111/111-11");
             cliente.setCpf("222.333.444-88");
             cliente.setNome("Victor");
+            cliente.setIdentificationClient(i);
 
 
             Produto produto = new Produto();
@@ -58,18 +59,35 @@ public class CarregarDatabase {
             item.setQuantidade(10);
             item.setValor(BigDecimal.valueOf(number));
 
-            item.setProduto(produto);
+            //Lista de Itens
+            List<Item>itens = new ArrayList<>();
+            itens.add(item);
+
+            //Relacionando item ao produto
             produto.setItem(item);
 
-            Pedido pedido = new Pedido();
-            pedido.addItem(item);
-            pedido.setLocalDateTime(LocalDateTime.of(2018, Month.AUGUST,18,0,0));
 
-            cliente.addPedido(pedido);
-            produtoRepository.save(produto);
-            pedidoRepository.save(pedido);
+            Pedido pedido = new Pedido();
+            //pedido.addItem(item);
+            pedido.setLocalDateTime(LocalDateTime.of(2018, Month.AUGUST,18,0,0));
+            pedido.setIdentificationPedido(i);
+            List<Pedido>pedidos = new ArrayList<>();
+            pedidos.add(pedido);
+
+            pedido.setClientIdentification(cliente.getIdentificationClient());
+
+            //Relacionando lista de itens com o pedido
+            pedido.setItens(itens);
+
+            //Relacionado Cliente com os pedidos
+            cliente.setPedidos(pedidos);
+
             itemRepository.save(item);
+            pedidoRepository.save(pedido);
             clienteRepository.save(cliente);
+            produtoRepository.save(produto);
+
+
         }
     }
 

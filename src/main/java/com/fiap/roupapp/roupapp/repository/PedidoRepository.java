@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface PedidoRepository extends JpaRepository<Pedido,String> {
 
 
-    Optional<Pedido> findById(String id);
+    Optional<Pedido> findByIdentificationPedido(int identification);
 
     List<String>findId();
 

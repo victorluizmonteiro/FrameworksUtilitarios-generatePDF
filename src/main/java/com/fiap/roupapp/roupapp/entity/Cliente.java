@@ -18,8 +18,8 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = -4478427800340465546L;
 
     @Id
-    @Indexed
     private String id;
+    private int identificationClient;
     private String cnpj;
     private String nome;
     private String cpf;
@@ -29,23 +29,24 @@ public class Cliente implements Serializable {
     private List<Pedido> pedidos;
 
 
-    public void addPedido(Pedido pedido){
+    /*public void addPedido(Pedido pedido){
         pedido.setCliente(this);
         pedidos.add(pedido);
-    }
+    }*/
 
     public Cliente() {
         pedidos = new ArrayList<Pedido>();
     }
 
 
-    public Cliente(String cnpj, String nome, String cpf, List<Pedido> pedidos) {
+    public Cliente(String id, int identificationClient, String cnpj, String nome, String cpf, List<Pedido> pedidos) {
+        this.id = id;
+        this.identificationClient = identificationClient;
         this.cnpj = cnpj;
         this.nome = nome;
         this.cpf = cpf;
-        this.pedidos = new ArrayList<Pedido>();
+        this.pedidos = pedidos;
     }
-
 
     public String getId() {
         return id;
@@ -85,5 +86,14 @@ public class Cliente implements Serializable {
 
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+
+    public int getIdentificationClient() {
+        return identificationClient;
+    }
+
+    public void setIdentificationClient(int identificationClient) {
+        this.identificationClient = identificationClient;
     }
 }
