@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListResourceBundle;
 import java.util.Random;
 
 @Component
@@ -40,22 +39,27 @@ public class CarregarDatabase {
 
     public void carregarBase() {
         Random random = new Random();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 1; i < 101; i++) {
             int number = random.nextInt(1000);
 
+            String idConverter = String.valueOf(i);
+
             Cliente cliente = new Cliente();
+            cliente.setId(idConverter);
             cliente.setCnpj("11.111.111/111-11");
             cliente.setCpf("222.333.444-88");
             cliente.setNome("Victor");
-            cliente.setIdentificationClient(i);
+            cliente.setIdentificationClient(idConverter);
 
 
             Produto produto = new Produto();
+            produto.setId(idConverter);
             produto.setDescricao("Descrição");
             produto.setPreco(BigDecimal.valueOf(number));
 
 
             Item item = new Item();
+            item.setId(idConverter);
             item.setQuantidade(10);
             item.setValor(BigDecimal.valueOf(number));
 
@@ -68,16 +72,20 @@ public class CarregarDatabase {
 
 
             Pedido pedido = new Pedido();
+            pedido.setId(idConverter);
             //pedido.addItem(item);
             pedido.setLocalDateTime(LocalDateTime.of(2018, Month.AUGUST,18,0,0));
-            pedido.setIdentificationPedido(i);
-            List<Pedido>pedidos = new ArrayList<>();
-            pedidos.add(pedido);
+            pedido.setIdentificationPedido(idConverter);
+            pedido.setIdentificationClient(idConverter);
 
-            pedido.setClientIdentification(cliente.getIdentificationClient());
+
 
             //Relacionando lista de itens com o pedido
             pedido.setItens(itens);
+
+            List<Pedido>pedidos = new ArrayList<>();
+            pedidos.add(pedido);
+
 
             //Relacionado Cliente com os pedidos
             cliente.setPedidos(pedidos);

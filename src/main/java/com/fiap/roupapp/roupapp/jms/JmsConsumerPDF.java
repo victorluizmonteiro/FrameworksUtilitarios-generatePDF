@@ -2,8 +2,6 @@ package com.fiap.roupapp.roupapp.jms;
 
 import com.fiap.roupapp.roupapp.entity.Cliente;
 import com.fiap.roupapp.roupapp.entity.Pedido;
-import com.fiap.roupapp.roupapp.repository.ClienteRepository;
-import com.fiap.roupapp.roupapp.repository.PedidoRepository;
 import com.fiap.roupapp.roupapp.service.ClienteService;
 import com.fiap.roupapp.roupapp.service.PedidoService;
 import com.fiap.roupapp.roupapp.utils.ItextUtils;
@@ -15,7 +13,6 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
@@ -29,8 +26,8 @@ public class JmsConsumerPDF {
 
     private String queueName;
     private ItextUtils itextUtils;
-    private ClienteService clienteService;
     private PedidoService pedidoService;
+    private ClienteService clienteService;
 
 
     @Autowired
@@ -42,25 +39,25 @@ public class JmsConsumerPDF {
         
         this.queueName = queueName;
         this.itextUtils = itextUtils;
-        this.clienteService = clienteService;
         this.pedidoService = pedidoService;
+        this.clienteService = clienteService;
 
     }
 
     /*@Transactional
     public Pedido buscarPedido(Integer id) {
-        return pedidoRepository.findById(id).get();
+        return pedidoService.findById(id).get();
     }*/
 
 
-   @JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory")
-    public void receiveMessage(int pedidoId) throws ExecutionException, InterruptedException {
+   //@JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory")
+    public void receiveMessage(String pedidoIdentification) throws ExecutionException, InterruptedException {
 
 
-        System.out.println("RECEBENDO " + pedidoId + ".....");
+        System.out.println("RECEBENDO " + pedidoIdentification + ".....");
 
-        Pedido pedido = pedidoService.findByIdentificationPedido(pedidoId);
-       Cliente cliente = clienteService.findByIdentificationClient(pedido.getClientIdentification());
+        Pedido pedido = pedidoService.findPedidoById(pedidoIdentification);
+       Cliente cliente = clienteService.findById(pedido.getIdentificationClient());
 
         Document cupom = new Document();
 

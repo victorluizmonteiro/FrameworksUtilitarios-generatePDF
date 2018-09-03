@@ -16,29 +16,24 @@ public class PedidoService {
 
     private PedidoRepository pedidoRepository;
 
-
     @Autowired
     public PedidoService(PedidoRepository pedidoRepository) {
         this.pedidoRepository = pedidoRepository;
-
     }
 
 
+    @Cacheable(value = "pedidos",key = "#id",unless="result.id < 500")
     @Transactional(readOnly = true)
-    public Pedido findByIdentificationPedido(int identification){
+    public Pedido findPedidoById(String id){
 
-        return  pedidoRepository.findByIdentificationPedido(identification).get();
+        return  pedidoRepository.findById(id).get();
     }
 
     @Transactional(readOnly=true,propagation = Propagation.SUPPORTS)
-    //@Async("fileExecutor")
-    public List<Pedido>findAll(){
+    @Async("fileExecutor")
+    public List<Pedido> findAll(){
 
-        return pedidoRepository.findAll();
+        return (List<Pedido>) pedidoRepository.findAll();
     }
 
-    public List<String>findId(){
-
-        return pedidoRepository.findId();
-    }
 }

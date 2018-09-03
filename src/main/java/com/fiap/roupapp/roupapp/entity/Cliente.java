@@ -19,7 +19,9 @@ public class Cliente implements Serializable {
 
     @Id
     private String id;
-    private int identificationClient;
+
+    @Indexed
+    private  String identificationClient;
     private String cnpj;
     private String nome;
     private String cpf;
@@ -39,7 +41,7 @@ public class Cliente implements Serializable {
     }
 
 
-    public Cliente(String id, int identificationClient, String cnpj, String nome, String cpf, List<Pedido> pedidos) {
+    public Cliente(String id, String identificationClient, String cnpj, String nome, String cpf, List<Pedido> pedidos) {
         this.id = id;
         this.identificationClient = identificationClient;
         this.cnpj = cnpj;
@@ -89,11 +91,11 @@ public class Cliente implements Serializable {
     }
 
 
-    public int getIdentificationClient() {
+    public String getIdentificationClient() {
         return identificationClient;
     }
 
-    public void setIdentificationClient(int identificationClient) {
+    public void setIdentificationClient(String identificationClient) {
         this.identificationClient = identificationClient;
     }
 }

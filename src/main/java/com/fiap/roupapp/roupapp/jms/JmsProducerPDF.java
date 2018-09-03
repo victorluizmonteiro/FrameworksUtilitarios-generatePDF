@@ -17,7 +17,7 @@ public class JmsProducerPDF {
         this.queueName = queueName;
     }
 
-    public void processMessaging(int  message) {
+    public void processMessaging(String  message) {
 
         jmsTemplate.convertAndSend(queueName, message);
 

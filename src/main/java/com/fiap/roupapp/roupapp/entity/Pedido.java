@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Reference;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
+import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,21 +19,22 @@ public class Pedido implements  Serializable{
     @Id
     private String id;
 
-    private int identificationPedido;
+    private String identificationPedido;
 
     @Reference
     private List<Item> itens;
 
-   @Reference
-    private int clientIdentification;
+
+    @Indexed
+    private String identificationClient;
 
     private LocalDateTime localDateTime;
 
-    public Pedido(String id, int identificationPedido, List<Item> itens, int clientIdentification, LocalDateTime localDateTime) {
+    public Pedido(String id, String identificationPedido, List<Item> itens, String identificationClient, LocalDateTime localDateTime) {
         this.id = id;
         this.identificationPedido = identificationPedido;
         this.itens = itens;
-        this.clientIdentification = clientIdentification;
+        this.identificationClient = identificationClient;
         this.localDateTime = localDateTime;
     }
 
@@ -61,13 +63,7 @@ public class Pedido implements  Serializable{
         this.itens = itens;
     }
 
-    public int getClientIdentification() {
-        return clientIdentification;
-    }
 
-    public void setClientIdentification(int clientIdentification) {
-        this.clientIdentification = clientIdentification;
-    }
 
     public LocalDateTime getLocalDateTime() {
         return localDateTime;
@@ -77,11 +73,23 @@ public class Pedido implements  Serializable{
         this.localDateTime = localDateTime;
     }
 
-    public int getIdentificationPedido() {
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getIdentificationPedido() {
         return identificationPedido;
     }
 
-    public void setIdentificationPedido(int identificationPedido) {
+    public void setIdentificationPedido(String identificationPedido) {
         this.identificationPedido = identificationPedido;
+    }
+
+    public String getIdentificationClient() {
+        return identificationClient;
+    }
+
+    public void setIdentificationClient(String identificationClient) {
+        this.identificationClient = identificationClient;
     }
 }
