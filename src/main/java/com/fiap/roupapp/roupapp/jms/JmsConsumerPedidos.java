@@ -25,7 +25,7 @@ public class JmsConsumerPedidos {
         this.jmsProducerPDF = jmsProducerPDF;
     }
 
-    @JmsListener(destination = "${mq.queue.pedidos}", containerFactory = "jsaFactory",concurrency ="20-50")
+    @JmsListener(destination = "${mq.queue.pedidos}", containerFactory = "jsaFactory",concurrency ="10-50")
     public void receiveMessageOne(Integer pedidoId) {
 
         System.out.println("Recebendo pedidos...   " + pedidoId);

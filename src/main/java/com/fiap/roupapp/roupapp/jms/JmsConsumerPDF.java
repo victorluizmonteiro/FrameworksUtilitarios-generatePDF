@@ -48,14 +48,11 @@ public class JmsConsumerPDF {
 
     }
 
-    /*@Transactional
-    public Pedido buscarPedido(Integer id) {
-        return pedidoRepository.findById(id).get();
-    }*/
+
 
 
    @JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory",concurrency ="20-50")
-    public void receiveMessage(Integer pedidoId) throws ExecutionException, InterruptedException {
+    public void receiveMessage(Integer pedidoId) {
 
 
         System.out.println("RECEBENDO " + pedidoId + ".....");
