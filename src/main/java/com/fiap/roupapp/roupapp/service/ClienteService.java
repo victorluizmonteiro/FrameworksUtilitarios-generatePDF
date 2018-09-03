@@ -18,13 +18,12 @@ public class ClienteService {
 
     private ClienteRepository clienteRepository;
 
-    private JdbcTemplate jdbcTemplate;
 
 
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository, JdbcTemplate jdbcTemplate) {
+    public ClienteService(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
-        this.jdbcTemplate = jdbcTemplate;
+
     }
 
     @Transactional(readOnly = true)

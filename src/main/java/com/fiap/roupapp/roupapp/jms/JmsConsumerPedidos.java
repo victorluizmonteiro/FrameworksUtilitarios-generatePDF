@@ -1,7 +1,6 @@
 package com.fiap.roupapp.roupapp.jms;
 
 import com.fiap.roupapp.roupapp.entity.Pedido;
-import com.fiap.roupapp.roupapp.repository.PedidoRepository;
 import com.fiap.roupapp.roupapp.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,13 +19,13 @@ public class JmsConsumerPedidos {
 
 
     @Autowired
-    public JmsConsumerPedidos(@Value("mq.queue.pedidos")String queueName,PedidoService pedidoService, JmsProducerPDF jmsProducerPDF) {
+    public JmsConsumerPedidos(@Value("mq.queue.pedidos")String queueName, PedidoService pedidoService, JmsProducerPDF jmsProducerPDF) {
         this.queueName = queueName;
         this.pedidoService = pedidoService;
         this.jmsProducerPDF = jmsProducerPDF;
     }
 
-    @JmsListener(destination = "${mq.queue.pedidos}", containerFactory = "jsaFactory",concurrency ="10-50")
+    @JmsListener(destination = "${mq.queue.pedidos}", containerFactory = "jsaFactory",concurrency ="20-50")
     public void receiveMessageOne(Integer pedidoId) {
 
         System.out.println("Recebendo pedidos...   " + pedidoId);
@@ -44,6 +43,8 @@ public class JmsConsumerPedidos {
 
 
     }
+
+
 
 
 

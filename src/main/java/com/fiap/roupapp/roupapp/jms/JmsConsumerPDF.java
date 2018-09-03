@@ -2,8 +2,6 @@ package com.fiap.roupapp.roupapp.jms;
 
 import com.fiap.roupapp.roupapp.entity.Cliente;
 import com.fiap.roupapp.roupapp.entity.Pedido;
-import com.fiap.roupapp.roupapp.repository.ClienteRepository;
-import com.fiap.roupapp.roupapp.repository.PedidoRepository;
 import com.fiap.roupapp.roupapp.service.ClienteService;
 import com.fiap.roupapp.roupapp.service.PedidoService;
 import com.fiap.roupapp.roupapp.utils.ItextUtils;
@@ -16,10 +14,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.annotation.JmsListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Calendar;
@@ -58,7 +54,7 @@ public class JmsConsumerPDF {
     }*/
 
 
-   //@JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory",concurrency ="10-50")
+   @JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory",concurrency ="20-50")
     public void receiveMessage(Integer pedidoId) throws ExecutionException, InterruptedException {
 
 

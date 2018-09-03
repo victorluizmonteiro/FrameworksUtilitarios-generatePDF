@@ -20,6 +20,7 @@ public class CarregarDatabase {
     private ItemRepository itemRepository;
     private ClienteRepository clienteRepository;
 
+
     @Autowired
     public CarregarDatabase(ItemRepository itemRepository, ClienteRepository clienteRepository) {
         this.itemRepository = itemRepository;
@@ -57,6 +58,7 @@ public class CarregarDatabase {
             itemRepository.save(item);
 
             clienteRepository.save(cliente);
+
         }
     }
 }

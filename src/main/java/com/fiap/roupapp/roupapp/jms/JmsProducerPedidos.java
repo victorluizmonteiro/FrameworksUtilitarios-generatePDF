@@ -18,7 +18,6 @@ public class JmsProducerPedidos {
     }
 
     public void processMessaging(Integer pedidoId) {
-
         jmsTemplate.convertAndSend(queueName, pedidoId);
 
 
