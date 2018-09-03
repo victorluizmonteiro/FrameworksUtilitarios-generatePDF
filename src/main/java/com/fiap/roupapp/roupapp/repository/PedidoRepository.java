@@ -11,10 +11,13 @@ import java.util.Optional;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido,Integer> {
 
+    @Query(value = "SELECT * FROM pedido WHERE ID = ?1",nativeQuery = true)
+
     Optional<Pedido> findById(Integer id);
 
-    @Query(value = "SELECT ID FROM PEDIDO",nativeQuery = true)
+    @Query(value = "SELECT ID FROM pedido",nativeQuery = true)
     List<Integer>findId();
 
+    @Query(value = "SELECT * FROM pedido",nativeQuery = true)
     List<Pedido> findAll();
 }

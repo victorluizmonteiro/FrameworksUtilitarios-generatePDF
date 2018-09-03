@@ -22,38 +22,19 @@ import java.util.stream.Collectors;
 public class ClienteController {
 
 
-    private CarregarDatabase carregarDatabase;
     private JmsProducerPDF jmsProducerPDF;
     private JmsProducerPedidos jmsProducerPedidos;
     private PedidoService pedidoService;
 
     @Autowired
-    public ClienteController(CarregarDatabase carregarDatabase,
-                             JmsProducerPDF jmsProducerPDF,
+    public ClienteController(JmsProducerPDF jmsProducerPDF,
                              JmsProducerPedidos jmsProducerPedidos,
                              PedidoService pedidoService) {
-        this.carregarDatabase = carregarDatabase;
         this.jmsProducerPDF = jmsProducerPDF;
         this.jmsProducerPedidos = jmsProducerPedidos;
         this.pedidoService = pedidoService;
     }
 
-    @PostMapping
-    public ResponseEntity carregarBase() {
-
-        carregarDatabase.carregarBase();
-
-        return ResponseEntity.ok().body("Base de dados carregada com sucesso ");
-
-
-    }/*
-
-    @Async("fileExecutor")
-    @Transactional
-    public CompletableFuture<List<Pedido>> buscarPedidos(){
-
-        return CompletableFuture.completedFuture(pedidoRepository.findAll());
-    }*/
 
 
 

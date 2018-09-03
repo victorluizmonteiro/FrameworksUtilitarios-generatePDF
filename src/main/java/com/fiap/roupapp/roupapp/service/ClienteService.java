@@ -28,14 +28,13 @@ public class ClienteService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "clienteCache")
     public Cliente findById(Integer id){
 
         return clienteRepository.findById(id).get();
     }
 
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
-    @Async("fileExecutor")
-    @Cacheable(value = "clienteCache")
+
     public List<Cliente> findAll(){
 
 

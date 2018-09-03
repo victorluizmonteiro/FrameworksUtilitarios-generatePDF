@@ -26,19 +26,22 @@ public class PedidoService {
 
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "pedidoCache")
+    @Async("fileExecutor")
     public Pedido findPedidoById(Integer id){
 
         return  pedidoRepository.findById(id).get();
     }
 
     @Transactional(readOnly=true,propagation = Propagation.SUPPORTS)
-
-    //@Async("fileExecutor")
+    @Async("fileExecutor")
     public List<Pedido>findAll(){
 
         return pedidoRepository.findAll();
     }
-    @Cacheable(value = "pedidoCache")
+
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Cacheable(value = "pedidoIdCache")
     @Async("fileExecutor")
     public List<Integer>findId(){
 

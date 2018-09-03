@@ -16,6 +16,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.annotation.JmsListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -29,6 +30,7 @@ public class JmsConsumerPDF {
 
 
     private String queueName;
+    private String folderDestinyPdf;
     private ItextUtils itextUtils;
     private ClienteService clienteService;
     private PedidoService pedidoService;
@@ -36,12 +38,14 @@ public class JmsConsumerPDF {
 
     @Autowired
     public JmsConsumerPDF(@Value("${mq.queue.pdf}") String queueName,
+                          @Value("${folder.destiny.pdf}") String folderDestinyPdf,
                           ItextUtils itextUtils,
                           PedidoService pedidoService,
                           ClienteService clienteService
                        ) {
         
         this.queueName = queueName;
+        this.folderDestinyPdf = folderDestinyPdf;
         this.itextUtils = itextUtils;
         this.clienteService = clienteService;
         this.pedidoService = pedidoService;
@@ -54,7 +58,7 @@ public class JmsConsumerPDF {
     }*/
 
 
-   // @JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory")
+   //@JmsListener(destination = "${mq.queue.pdf}", containerFactory = "jsaFactory",concurrency ="10-50")
     public void receiveMessage(Integer pedidoId) throws ExecutionException, InterruptedException {
 
 
@@ -70,7 +74,7 @@ public class JmsConsumerPDF {
 
 
                 //PdfWriter writer = PdfWriter.getInstance(cupom, new FileOutputStream("D:\\PDFS\\cupom "+pedido.getId()+"-"+ Calendar.getInstance().getTimeInMillis() + ".pdf"));
-                PdfWriter writer = PdfWriter.getInstance(cupom, new FileOutputStream("/Users/monteiro/Documents/PDF/cupom"+pedido.getId()+"-"+ Calendar.getInstance().getTimeInMillis() + ".pdf"));
+                PdfWriter writer = PdfWriter.getInstance(cupom, new FileOutputStream(folderDestinyPdf+"cupom"+pedido.getId()+"-"+ Calendar.getInstance().getTimeInMillis() + ".pdf"));
 
                 cupom.open();
                 cupom.add(new Paragraph("Gerando PDF"));
