@@ -1,5 +1,5 @@
  Passo a passo de execução do projeto
-
+Entrega inclui desenho de uma arquitetura utilizando  o Pattern Paginator do EIP, arquivo FIAP-EIP.jpeg
 1 - Pré requisitos
     - Java 8
     - Servidor MySQL rodando na porta 3306 e com o ip 127.0.0.1
